@@ -1,0 +1,18 @@
+<app-form-card formTitle="Se connecter" *ngIf="vm$ | async as vm">
+  <app-message [message]="vm.error" type="error" (handleClose)="closeMessage()" />
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    [ngClass]="vm.error ? 'translate-y-2' : ''"
+    class="gap-8 flex flex-col justify-center transition-transform duration-300 ease-in-out">
+    <app-input type="email" label="Email" placeholder="Entrez votre email" name="email" />
+    <app-input type="password" label="Mot de passe" placeholder="Entrez votre mot de passe" name="password" />
+    <app-button type="submit" [loading]="vm.isLoading" [disabled]="form.invalid"> Se connecter </app-button>
+    <hr class="border-gray-300 w-full" />
+    <app-button-outline (click)="loginWithGoogle()">
+      <img ngSrc="/assets/images/google.svg" alt="google" class="mr-2 h-4 w-4" width="10" height="10" />
+      <span class="text-gray-950 text-sm">Se connecter avec Google</span>
+    </app-button-outline>
+    <a routerLink="/reset-password-request" class="text-gray-950 text-sm"> Mot de passe oublié ? Récupérez-le </a>
+  </form>
+</app-form-card>

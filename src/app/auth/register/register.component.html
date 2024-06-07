@@ -1,0 +1,54 @@
+<app-form-card formTitle="Inscrivez-vous" *ngIf="vm$ | async as vm">
+  @if (vm.error) {
+  <app-message [message]="vm.error" type="error" (handleClose)="closeMessage()" />
+  }
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    [ngClass]="vm.error ? 'translate-y-2' : ''"
+    class="gap-8 flex flex-col justify-center transition-transform duration-300 ease-in">
+    <app-input
+      type="text"
+      name="name"
+      label="Nom complet"
+      placeholder="Entrez votre nom"
+      [validationErrors]="vm.validationErrors" />
+    <app-input
+      type="email"
+      name="email"
+      label="Email"
+      placeholder="Entrez votre email"
+      [validationErrors]="vm.validationErrors" />
+    <app-input
+      type="text"
+      name="phone_number"
+      label="Numéro téléphonique"
+      placeholder="Entrez votre numéro"
+      [validationErrors]="vm.validationErrors" />
+    <app-input
+      type="text"
+      name="address"
+      label="Votre adresse"
+      placeholder="Entrez votre adresse"
+      [validationErrors]="vm.validationErrors" />
+    <app-input
+      type="password"
+      name="password"
+      label="Mot de passe"
+      placeholder="Entrez votre mot de passe"
+      [validationErrors]="vm.validationErrors" />
+    <app-input
+      type="password"
+      name="password_confirm"
+      label="Confirmez votre mot de passe"
+      placeholder="Entrez votre confirmation"
+      [validationErrors]="vm.validationErrors" />
+    <app-button type="submit" [loading]="vm.isLoading" [disabled]="form.invalid"> S'inscrire </app-button>
+    <hr class="my-6 border-gray-300 w-full" />
+    <app-button-outline (click)="loginWithGoogle()">
+      <img ngSrc="../../../assets/images/google.svg" alt="googlr" class="mr-2 h-4 w-4" width="10" height="10" />
+      <span class="text-gray-950 text-sm"> S'inscrire avec Google</span>
+    </app-button-outline>
+    <a routerLink="/register" class="text-gray-950 text-sm"> Pas encore de compte ? Inscrivez-vous </a>
+  </form>
+</app-form-card>

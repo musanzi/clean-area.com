@@ -1,0 +1,97 @@
+<header class="relative h-full">
+  <nav [ngClass]="isOpen ? 'lg:static fixed top-0 bottom-0 right-0 left-0 bg-white/75 z-10' : ''">
+    <ul
+      class="navbar fixed w-full top-0 left-0 right-0 translate-y-0 lg:px-20 px-10 py-3 transition-transform duration-300 text-gray-800 bg-white shadow-sm z-20 flex items-center justify-between">
+      <a routerLink="/" class="flex items-center gap-3 cursor-pointer" aria-label="logo" (click)="closeNavbar()">
+        <!-- <img ngSrc="/assets/images/favicon.png" alt="logo" class="cursor-pointer w-8" width="64" height="68" priority /> -->
+        <h1 class="font-bold text-2xl">Starter<span class="text-emerald-400 animate-ping">.</span></h1>
+      </a>
+      <button
+        class="flex flex-col cursor-pointer gap-2 lg:hidden"
+        [ngClass]="isOpen ? 'nav-open' : ''"
+        (click)="isOpen ? closeNavbar() : openNavbar()">
+        <div class="h-[1px] w-6 bg-current transition-transform duration-300"></div>
+        <div class="h-[1px] w-6 bg-current transition-transform duration-300"></div>
+      </button>
+      <!-- Desktop navbar -->
+      <div class="hidden lg:flex gap-5">
+        @if (user$ | async; as user) {
+          @for (link of commonLinks; track $index) {
+            <a
+              [routerLink]="link.path"
+              class="hover:text-blue-400 transition-colors duration-300"
+              (click)="closeNavbar()"
+              routerLinkActive="text-blue-400"
+              [routerLinkActiveOptions]="{ exact: true }">
+              {{ link.name }}
+            </a>
+          }
+          <a
+            routerLink="/profile"
+            class="hover:text-blue-400 transition-colors duration-300"
+            (click)="closeNavbar()"
+            routerLinkActive="text-blue-400"
+            [routerLinkActiveOptions]="{ exact: true }">
+            {{ trimName(user.name) }}
+          </a>
+          <button href="" class="hover:text-blue-400 transition-colors duration-300" (click)="logOut()">
+            Déconnexion
+          </button>
+        } @else {
+          @for (link of unAuthenticatedUserLinks; track $index) {
+            <a
+              [routerLink]="link.path"
+              class="hover:text-blue-400 transition-colors duration-300"
+              (click)="closeNavbar()"
+              routerLinkActive="text-blue-400"
+              [routerLinkActiveOptions]="{ exact: true }">
+              {{ link.name }}
+            </a>
+          }
+        }
+      </div>
+    </ul>
+    <!-- Mobile navbar -->
+    <div
+      class="lg:hidden fixed top-14 left-0 right-16 backdrop-blur-lg bottom-0 bg-white z-40 transition-transform duration-300"
+      [ngClass]="isOpen ? 'translate-x-0' : '-translate-x-[200%]'">
+      <div class="flex flex-col gap-5 p-20 py-40">
+        @if (user$ | async; as user) {
+          @for (link of commonLinks; track $index) {
+            <a
+              [routerLink]="link.path"
+              class="hover:text-blue-400 transition-colors duration-300"
+              (click)="closeNavbar()"
+              routerLinkActive="text-blue-400"
+              [routerLinkActiveOptions]="{ exact: true }">
+              {{ link.name }}
+            </a>
+          }
+          <a
+            routerLink="/profile"
+            class="hover:text-blue-400 transition-colors duration-300"
+            (click)="closeNavbar()"
+            routerLinkActive="text-blue-400"
+            [routerLinkActiveOptions]="{ exact: true }">
+            {{ trimName(user.name) }}
+          </a>
+
+          <button href="" class="inline-flex hover:text-blue-400 transition-colors duration-300" (click)="logOut()">
+            Déconnexion
+          </button>
+        } @else {
+          @for (link of unAuthenticatedUserLinks; track $index) {
+            <a
+              [routerLink]="link.path"
+              class="hover:text-blue-400 transition-colors duration-300"
+              (click)="closeNavbar()"
+              routerLinkActive="text-blue-400"
+              [routerLinkActiveOptions]="{ exact: true }">
+              {{ link.name }}
+            </a>
+          }
+        }
+      </div>
+    </div>
+  </nav>
+</header>

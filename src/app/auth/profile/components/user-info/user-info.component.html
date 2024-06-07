@@ -1,0 +1,57 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <div class="flex flex-col gap-3 items-start" *ngIf="vm.user as user">
+    <div class="flex flex-col md:flex-row md:items-center gap-8">
+      <div class="w-32 h-32 bg-gray-200/60 relative rounded-full flex flex-col items-center justify-center">
+        @if (user.profile || user.google_image) {
+          <img [ngSrc]="displayProfile(user)" class="rounded-full" [alt]="user.name" fill priority />
+        } @else {
+          <h2 class="text-gray-950 font-bold text-xl">{{ splitUsername(user) }}</h2>
+        }
+        <button
+          type="button"
+          (click)="file.click()"
+          class="absolute bg-gray-100 rounded-full shadow-lg -bottom-2 p-2.5 flex items-center justify-center right-0">
+          <app-spinner class="text-green-700 h-7 w-7" *ngIf="vm.userInfoState.isLoading" />
+          <i class="bi bi-camera font-black h-7 w-7" *ngIf="!vm.userInfoState.isLoading"></i>
+          <input
+            id="thumb"
+            name="thumb"
+            type="file"
+            class="hidden"
+            accept="image/*"
+            (change)="onImageChange($event, user.id)"
+            #file />
+        </button>
+      </div>
+      <div class="flex flex-col gap-2">
+        <h3 class="text-gray-900 text-xl font-semibold">Mon compte</h3>
+        <p class="text-gray-800 font-medium">Inscrit le {{ user.created_at | date: 'longDate' }}</p>
+      </div>
+    </div>
+
+    <div class="flex gap-2 flex-col mt-4">
+      <app-message
+        [message]="vm.userInfoState.message.message"
+        [type]="vm.userInfoState.message.type"
+        (handleClose)="closeUserInfoMessage()" />
+
+      <div
+        class="flex flex-col gap-2.5 transition-transform duration-100"
+        [ngClass]="vm.userInfoState.message.message ? 'translate-y-1 ease-in' : 'ease-out'">
+        <h2 class="mt-4 text-gray-900 font-bold text-lg mb-1">Mes informations</h2>
+        <p class="text-gray-800 font-medium flex items-center gap-3">
+          <i class="bi bi-envelope h-5 w-5 text-gray-900"></i> {{ user.email }}
+        </p>
+        <p class="text-gray-800 font-medium flex items-center gap-3">
+          <i class="bi bi-person h-5 w-5 text-gray-900"></i> {{ user.name }}
+        </p>
+        <p class="text-gray-800 font-medium flex items-center md:w-2/3 gap-3">
+          <i class="bi bi-geo-alt-fill h-5 w-5 text-gray-900"></i> {{ user.address }}
+        </p>
+        <p class="text-gray-800 font-medium flex items-center gap-3">
+          <i class="bi bi-telephone-inbound h-5 w-5 text-gray-900"></i> {{ user.phone_number }}
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>

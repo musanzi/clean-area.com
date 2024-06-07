@@ -1,0 +1,11 @@
+<button
+  [disabled]="loading"
+  [type]="type"
+  class="inline-flex w-full h-10 px-4 py-2 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900">
+  @if (loading) {
+    <app-spinner />
+    En cours..
+  } @else {
+    <ng-content />
+  }
+</button>

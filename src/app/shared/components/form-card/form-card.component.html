@@ -1,0 +1,15 @@
+<div class="relative py-20 bg-gray-50">
+  <div class="container relative m-auto px-6 md:px-12 xl:px-48">
+    <div class="m-auto space-y-8 md:w-8/12 lg:w-6/12 xl:w-6/12 mt-10">
+      <div class="rounded-md border border-gray-100 bg-white shadow-lg shadow-gray-600/30 backdrop-blur-2xl">
+        <div class="p-8 py-12 sm:p-16">
+          <h2 class="text-2xl font-extrabold mb-8">{{ formTitle }}</h2>
+          @if (error) {
+            <app-message type="error" [message]="error" />
+          }
+          <ng-content />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
